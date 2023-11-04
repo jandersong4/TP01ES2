@@ -1,6 +1,8 @@
 const {jwtMiddleware} = require('../../../middlewares/auth-middlewares');
 const productValidate = require('../../../middlewares/product-validator');
 const ProductService = require('../service/ProductService');
+const requestFilter = require('../../../middlewares/object-filter');
+
 
 // CRUD: Create, Read, Update, Delete
 
@@ -28,15 +30,7 @@ require('express').Router().get('/ler10', jwtMiddleware,
 
 require('express').Router().post('/',
   jwtMiddleware,
-  (req, res, next) => {
-    // Lógica de filtro
-    const allowedKeys = ['name', 'image'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  requestFilter('body', ['name', 'image']),
   productValidate('createProduct'),
   async (req, res, next) => {
     try {
@@ -68,15 +62,7 @@ require('express').Router().get('/:id',
 
 require('express').Router().put('/:id',
   jwtMiddleware,
-  (req, res, next) => {
-    // Lógica de filtro
-    const allowedKeys = ['name', 'image'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  requestFilter('body', ['name', 'image']),
   productValidate('updateProduct'),
   async (req, res, next) =>{
     try {

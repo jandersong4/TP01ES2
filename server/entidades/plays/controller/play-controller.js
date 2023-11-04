@@ -1,19 +1,12 @@
 const {jwtMiddleware} = require('../../../middlewares/auth-middlewares');
 const PlayService = require('../Service/PlayService');
 const playValidate = require('../../../middlewares/play-validator');
+const requestFilter = require('../../../middlewares/object-filter');
 
 
 require('express').Router().post('/',
   jwtMiddleware,
-  (req, res, next) => {
-    // Lógica de filtro
-    const allowedKeys = ['IdDaPartida', 'd4', 'd8', 'd6', 'd10', 'd12', 'd20'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  requestFilter('body', ['IdDaPartida', 'd4', 'd8', 'd6', 'd10', 'd12', 'd20']),
   playValidate('createPlay'),
   async (req, res, next) => {
     try {

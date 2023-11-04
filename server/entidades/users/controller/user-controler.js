@@ -5,18 +5,11 @@ const {
   jwtMiddleware,
   checkRole,
 } = require('../../../middlewares/auth-middlewares');
+const objectFilter = require('../../../middlewares/object-filter');
 const userValidate = require('../../../middlewares/user-validator');
 
 require('express').Router().post('/',
-  (req, res, next) => {
-  // Lógica de filtro de objeto
-    const allowedKeys = ['full_name', 'username', 'email', 'image', 'password'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  objectFilter('body', ['full_name', 'username', 'email', 'image', 'password']),
   userValidate('createUser'),
   async (req, res)=>{
     try {
@@ -57,15 +50,7 @@ require('express').Router().get('/user/:id', jwtMiddleware,
 
 require('express').Router().put('/user/:id',
   jwtMiddleware,
-  (req, res, next) => {
-  // filtro de objeto
-    const allowedKeys = ['fullname', 'username', 'email', 'image'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  objectFilter('body', ['fullname', 'username', 'email', 'image']),
   userValidate('updateUser'),
   async (req, res) => {
     try {

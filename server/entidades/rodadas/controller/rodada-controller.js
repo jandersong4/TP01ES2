@@ -1,6 +1,7 @@
 const {jwtMiddleware} = require('../../middlewares/auth-middlewares');
 const RodadaService = require('../service/RodadaService');
 const rodadaValidate = require('../../middlewares/rodada-validator');
+const requestFilter = require('../../../middlewares/object-filter');
 
 
 require('express').Router().get('/', jwtMiddleware,
@@ -16,15 +17,7 @@ require('express').Router().get('/', jwtMiddleware,
 
 require('express').Router().post('/',
   jwtMiddleware,
-  (req, res, next) => {
-    // Lógica de filtro
-    const allowedKeys = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'ProducId'];
-    Object.keys(req.body).forEach((key) => {
-      if (!allowedKeys.includes(key)) {
-        delete req.body[key];
-      }
-    });
-  },
+  requestFilter('body', ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'ProducId']),
   rodadaValidate('createRodada'),
   async (req, res, next) => {
     console.log('---->', req.body);
