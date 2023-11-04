@@ -2,11 +2,12 @@ const {jwtMiddleware} = require('../../../middlewares/auth-middlewares');
 const productValidate = require('../../../middlewares/product-validator');
 const ProductService = require('../service/ProductService');
 const requestFilter = require('../../../middlewares/object-filter');
+const router = require('express').Router();
 
 
 // CRUD: Create, Read, Update, Delete
 
-require('express').Router().get('/', jwtMiddleware,
+router.get('/', jwtMiddleware,
   async (req, res, next) =>{
     try {
       const products = await ProductService.getAllProducts();
@@ -17,7 +18,7 @@ require('express').Router().get('/', jwtMiddleware,
   },
 );
 
-require('express').Router().get('/ler10', jwtMiddleware,
+router.get('/ler10', jwtMiddleware,
   async (req, res, next) =>{
     try {
       const products = await ProductService.get10();
@@ -28,7 +29,7 @@ require('express').Router().get('/ler10', jwtMiddleware,
   },
 );
 
-require('express').Router().post('/',
+router.post('/',
   jwtMiddleware,
   requestFilter('body', ['name', 'image']),
   productValidate('createProduct'),
@@ -47,7 +48,7 @@ require('express').Router().post('/',
   },
 );
 
-require('express').Router().get('/:id',
+router.get('/:id',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -60,7 +61,7 @@ require('express').Router().get('/:id',
   },
 );
 
-require('express').Router().put('/:id',
+router.put('/:id',
   jwtMiddleware,
   requestFilter('body', ['name', 'image']),
   productValidate('updateProduct'),
@@ -81,7 +82,7 @@ require('express').Router().put('/:id',
   },
 );
 
-require('express').Router().delete('/:id',
+router.delete('/:id',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -100,4 +101,4 @@ require('express').Router().delete('/:id',
 );
 
 
-module.exports = require('express').Router();
+module.exports = router;

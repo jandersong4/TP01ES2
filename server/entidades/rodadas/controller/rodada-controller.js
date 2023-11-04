@@ -2,9 +2,10 @@ const {jwtMiddleware} = require('../../middlewares/auth-middlewares');
 const RodadaService = require('../service/RodadaService');
 const rodadaValidate = require('../../middlewares/rodada-validator');
 const requestFilter = require('../../../middlewares/object-filter');
+const router = require('express').Router();
 
 
-require('express').Router().get('/', jwtMiddleware,
+router.get('/', jwtMiddleware,
   async (req, res, next) =>{
     try {
       const rodadas = await RodadaService.getAllRodadas();
@@ -15,7 +16,7 @@ require('express').Router().get('/', jwtMiddleware,
   },
 );
 
-require('express').Router().post('/',
+router.post('/',
   jwtMiddleware,
   requestFilter('body', ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'ProducId']),
   rodadaValidate('createRodada'),
@@ -35,7 +36,7 @@ require('express').Router().post('/',
   },
 );
 
-require('express').Router().get('/:id',
+router.get('/:id',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -48,4 +49,4 @@ require('express').Router().get('/:id',
   },
 );
 
-module.exports = require('express').Router();
+module.exports = router;

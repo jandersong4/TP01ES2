@@ -1,4 +1,6 @@
 const UserService = require('../service/UserService');
+const router = require('express').Router();
+
 const {
   loginMiddleware,
   notLoggedIn,
@@ -8,7 +10,7 @@ const {
 const objectFilter = require('../../../middlewares/object-filter');
 const userValidate = require('../../../middlewares/user-validator');
 
-require('express').Router().post('/',
+router.post('/',
   objectFilter('body', ['full_name', 'username', 'email', 'image', 'password']),
   userValidate('createUser'),
   async (req, res)=>{
@@ -27,7 +29,7 @@ require('express').Router().post('/',
     }
   });
 
-require('express').Router().get('/', jwtMiddleware, async (req, res) => {
+router.get('/', jwtMiddleware, async (req, res) => {
   try {
     const users = await UserService.getAllUsers();
     res.status(200).json(users);
@@ -36,7 +38,7 @@ require('express').Router().get('/', jwtMiddleware, async (req, res) => {
   }
 });
 
-require('express').Router().get('/user/:id', jwtMiddleware,
+router.get('/user/:id', jwtMiddleware,
   async (req, res) => {
     try {
       const userId = req.params.id;
@@ -48,7 +50,7 @@ require('express').Router().get('/user/:id', jwtMiddleware,
     }
   });
 
-require('express').Router().put('/user/:id',
+router.put('/user/:id',
   jwtMiddleware,
   objectFilter('body', ['fullname', 'username', 'email', 'image']),
   userValidate('updateUser'),
@@ -64,7 +66,7 @@ require('express').Router().put('/user/:id',
     }
   });
 
-require('express').Router().delete('/user/:id',
+router.delete('/user/:id',
   jwtMiddleware,
   checkRole('admin'),
   async (req, res, next) => {
@@ -79,10 +81,10 @@ require('express').Router().delete('/user/:id',
   });
 
 
-require('express').Router().post(
+router.post(
   '/login', notLoggedIn, userValidate('login'), loginMiddleware);
 
-require('express').Router().get('/logout', jwtMiddleware, (req, res) => {
+router.get('/logout', jwtMiddleware, (req, res) => {
   try {
     res.clearCookie('jwt');
     res.status(204).end();
@@ -91,7 +93,7 @@ require('express').Router().get('/logout', jwtMiddleware, (req, res) => {
   }
 });
 
-require('express').Router().get('/me', jwtMiddleware, async (req, res) => {
+router.get('/me', jwtMiddleware, async (req, res) => {
   try {
     const user = await UserService.getCurrentUser(req.user.id);
 
@@ -101,4 +103,4 @@ require('express').Router().get('/me', jwtMiddleware, async (req, res) => {
   }
 });
 
-module.exports = require('express').Router();
+module.exports = router;

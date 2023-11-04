@@ -2,9 +2,10 @@ const {jwtMiddleware} = require('../../../middlewares/auth-middlewares');
 const PlayService = require('../Service/PlayService');
 const playValidate = require('../../../middlewares/play-validator');
 const requestFilter = require('../../../middlewares/object-filter');
+const router = require('express').Router();
 
 
-require('express').Router().post('/',
+router.post('/',
   jwtMiddleware,
   requestFilter('body', ['IdDaPartida', 'd4', 'd8', 'd6', 'd10', 'd12', 'd20']),
   playValidate('createPlay'),
@@ -24,7 +25,7 @@ require('express').Router().post('/',
   ,
 );
 
-require('express').Router().get('/', jwtMiddleware,
+router.get('/', jwtMiddleware,
   async (req, res, next) =>{
     try {
       const plays = await PlayService.getAllPlays();
@@ -35,7 +36,7 @@ require('express').Router().get('/', jwtMiddleware,
   },
 );
 
-require('express').Router().get('/:id',
+router.get('/:id',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -48,7 +49,7 @@ require('express').Router().get('/:id',
   },
 );
 
-require('express').Router().get('/listaJogadas/:idDaPartida',
+router.get('/listaJogadas/:idDaPartida',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -63,7 +64,7 @@ require('express').Router().get('/listaJogadas/:idDaPartida',
 );
 
 
-require('express').Router().delete('/:id',
+router.delete('/:id',
   jwtMiddleware,
   async (req, res, next) => {
     try {
@@ -81,4 +82,4 @@ require('express').Router().delete('/:id',
   },
 );
 
-module.exports = require('express').Router();
+module.exports = router;
