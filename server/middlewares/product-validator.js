@@ -3,7 +3,7 @@ const validate = require('./validate');
 
 function getValidations(method) {
   switch (method) {
-  case 'createProduct': {
+  case 'createMatch': {
     return [
       body('name')
         .exists()
@@ -18,7 +18,7 @@ function getValidations(method) {
     ];
   };
 
-  case 'updateProduct': {
+  case 'updateMatch': {
     return [
       body('name')
         .optional()
@@ -34,9 +34,9 @@ function getValidations(method) {
 }
 
 
-function productValidate(method) {
+function matchValidate(method) {
   const validations = getValidations(method);
   return validate(validations);
 }
 
-module.exports = productValidate;
+module.exports = matchValidate;

@@ -1,4 +1,4 @@
-const Product = require('../model/Product');
+const Product = require('../model/matchs');
 const PermissionError = require('../../../errors/PermissionError');
 const QueryError = require('../../../errors/QueryError');
 

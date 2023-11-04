@@ -1,6 +1,6 @@
 const {jwtMiddleware} = require('../../../middlewares/auth-middlewares');
 const productValidate = require('../../../middlewares/product-validator');
-const ProductService = require('../service/ProductService');
+const ProductService = require('../service/matchs');
 const requestFilter = require('../../../middlewares/object-filter');
 const router = require('express').Router();
 

@@ -27,9 +27,9 @@ require('./auth');
 const userRouter = require('../entidades/users/controller/user-controler');
 app.use('/users', userRouter);
 
-const productRouter = require(
-  '../entidades/products/controller/product-controller');
-app.use('/products', productRouter);
+const matchRouter = require(
+  '../entidades/matchs/controller/matchs-controller');
+app.use('/matchs', matchRouter);
 
 
 const playRouter = require('../entidades/plays/controller/play-controller');

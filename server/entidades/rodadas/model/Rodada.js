@@ -44,12 +44,6 @@ const Rodada = sequelize.define('Rodadas', {
     allowNull: true,
   },
 
-  // ProductId: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: true,
-  //   references: {model: 'Product', key: 'id'},
-  // },
-
 
 });
 

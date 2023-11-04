@@ -37,24 +37,11 @@ function getValidations(method) {
         .withMessage('O dado da partida não pode ficar vazio!'),
       body('IdDoProduto')
         .exists()
-        .withMessage('Você deve enviar um ProductId para a partida!')
+        .withMessage('Você deve enviar um MatchId para a partida!')
         .notEmpty()
-        .withMessage('O ProductId da partida não pode ficar vazio!'),
+        .withMessage('O MatchId da partida não pode ficar vazio!'),
     ];
   };
-
-//   case 'updateProduct': {
-//     return [
-//       body('name')
-//         .optional()
-//         .notEmpty()
-//         .withMessage('O nome da partida não pode ficar vazio!'),
-//       body('image')
-//         .optional()
-//         .isURL()
-//         .withMessage('A imagem deve ser uma URL!'),
-//     ];
-//   }
   }
 }
 

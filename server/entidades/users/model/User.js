@@ -1,7 +1,7 @@
 
 const sequelize = require('../../../database');
 const {DataTypes} = require('sequelize');
-const Product = require('../../products/model/Product');
+const Match = require('../../matchs/model/matchs');
 const Rodada = require('../../rodadas/model/Rodada');
 const Play = require('../../plays/model/Play');
 
@@ -48,20 +48,19 @@ const User = sequelize.define('Users', {
   },
 });
 
-User.hasMany(Product, {
+User.hasMany(Match, {
   onDelete: 'cascade',
-  as: 'productUserData', foreignKey: {name: 'UserId'},
+  as: 'matchUserData', foreignKey: {name: 'UserId'},
 });
-Product.belongsTo(User, {as: 'productUserData', foreignKey: {name: 'UserId'}});
-// Product.belongsTo(User);
+Match.belongsTo(User, {as: 'matchUserData', foreignKey: {name: 'UserId'}});
 
 
 User.sync({alter: false, force: false})
   .then(() => console.log('A tabela Users foi (re)criada'))
   .catch((error) => console.log(error));
 
-Product.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Products foi (re)criada'))
+Match.sync({alter: false, force: false})
+  .then(() => console.log('A tabela Matchs foi (re)criada'))
   .catch((error) => console.log(error));
 
 // ////////////////////////Rolagem de dados//////////////
@@ -82,7 +81,6 @@ User.hasMany(Play, {
   as: 'userdata', foreignKey: {name: 'UserId'},
 });
 Play.belongsTo(User, {as: 'userdata', foreignKey: {name: 'UserId'}});
-// Product.belongsTo(User);
 
 
 User.sync({alter: false, force: false})
