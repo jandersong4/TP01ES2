@@ -56,11 +56,11 @@ Match.belongsTo(User, {as: 'matchUserData', foreignKey: {name: 'UserId'}});
 
 
 User.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Users foi (re)criada'))
+  // .then(() => console.log('A tabela Users foi (re)criada'))
   .catch((error) => console.log(error));
 
 Match.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Matchs foi (re)criada'))
+  // .then(() => console.log('A tabela Matchs foi (re)criada'))
   .catch((error) => console.log(error));
 
 // ////////////////////////Rolagem de dados//////////////
@@ -72,7 +72,7 @@ Rodada.belongsTo(User);
 Rodada.belongsTo(User);
 
 Rodada.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Rodadas foi (re)criada'))
+  // .then(() => console.log('A tabela Rodadas foi (re)criada'))
   .catch((error) => console.log(error));
 
 
@@ -84,11 +84,11 @@ Play.belongsTo(User, {as: 'userdata', foreignKey: {name: 'UserId'}});
 
 
 User.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Users foi (re)criada'))
+  // .then(() => console.log('A tabela Users foi (re)criada'))
   .catch((error) => console.log(error));
 
 Play.sync({alter: false, force: false})
-  .then(() => console.log('A tabela Plays foi (re)criada'))
+  // .then(() => console.log('A tabela Plays foi (re)criada'))
   .catch((error) => console.log(error));
 
 

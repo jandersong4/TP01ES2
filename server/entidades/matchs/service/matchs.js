@@ -38,7 +38,7 @@ class ProductService {
 
     const isAdmin = reqUserRole === 'admin';
     const isProductOwner = reqUserId === product.UserId;
-    console.log(isAdmin, isProductOwner);
+    // console.log(isAdmin, isProductOwner);
     if (!isAdmin && !isProductOwner) {
       throw new PermissionError(
         'Você não tem permissão para editar esse produto',
