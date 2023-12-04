@@ -10,15 +10,14 @@ const {
 const objectFilter = require('../../../middlewares/object-filter');
 const userValidate = require('../../../middlewares/user-validator');
 
-router.post('/',
+router.post(
+  '/createAdmin',
   objectFilter('body', ['full_name', 'username', 'email', 'image', 'password']),
-  userValidate('createUser'),
-  async (req, res)=>{
+  async (req, res) => {
     try {
       const user = {
         ...req.body,
-        role: 'user',
-
+        role: 'admin',
       };
 
       await UserService.createUser(user);
@@ -27,7 +26,38 @@ router.post('/',
     } catch (error) {
       console.log(error);
     }
-  });
+  },
+);
+
+router.post(
+  '/',
+  objectFilter('body', ['full_name', 'username', 'email', 'image', 'password']),
+  userValidate('createUser'),
+  async (req, res) => {
+    try {
+      const user = {
+        ...req.body,
+        role: 'user',
+      };
+
+      // Chamar o serviço para criar o usuário e obter os dados do usuário criado
+      const createdUser = await UserService.createUser(user);
+
+      // Modificação: Incluir os dados do usuário, incluindo o ID, no corpo da resposta
+      const responseBody = {
+        message: 'User created successfully!',
+        user: createdUser, // Incluindo os dados do usuário no corpo da resposta
+      };
+
+      // Responder com o status 201 (Created) e o corpo da resposta JSON
+      res.status(201).json(responseBody);
+    } catch (error) {
+      console.log(error);
+      // Modificação: Em caso de erro, responder com um status de erro (por exemplo, 500) e uma mensagem de erro
+      res.status(500).json({error: 'Internal Server Error'});
+    }
+  },
+);
 
 router.get('/', jwtMiddleware, async (req, res) => {
   try {
@@ -57,10 +87,13 @@ router.put('/user/:id',
   async (req, res) => {
     try {
       const userId = req.params.id;
-      await UserService.updateUser(
-        userId, req.user.id, req.user.role, req.body);
 
-      res.status(204).end();
+      // Atualize o usuário e obtenha o corpo da solicitação atualizado
+      const updatedUserData = req.body;
+      await UserService.updateUser(userId, req.user.id, req.user.role, updatedUserData);
+
+      // Retorne os dados atualizados na resposta
+      res.status(200).json(updatedUserData);
     } catch (error) {
       res.status(400).send(error.message);
     }

@@ -8,15 +8,26 @@ const QueryError = require('../../../errors/QueryError');
 
 class UserService {
   async createUser(user) {
-    const saltRounds = 10;
+    try {
+      const saltRounds = 10;
 
-    user.password = await bcrypt.hash(user.password, saltRounds);
-    await User.create(user);
+      // Atribuir o hash da senha
+      user.password = await bcrypt.hash(user.password, saltRounds);
+
+      // Criar o usuário e aguardar a resolução da Promise retornada por User.create
+      const createdUser = await User.create(user);
+
+      // Retornar o usuário criado (incluindo o ID)
+      return createdUser; // Ou simplesmente `createdUser` dependendo da estrutura do seu modelo
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getAllUsers() {
-    return await User.findAll({raw: true, attributes:
-      {
+    return await User.findAll({
+      raw: true,
+      attributes: {
         exclude: ['password', 'createdAt', 'updatedAt'],
       },
     });
@@ -54,6 +65,7 @@ class UserService {
         );
       }
       await user.update(body);
+      return user;
     } else {
       throw new PermissionError(
         'Voce nao tem permissão para atualizar esse usuário');

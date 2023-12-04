@@ -5,7 +5,7 @@ const Match = require('../../matchs/model/matchs');
 const Rodada = require('../../rodadas/model/Rodada');
 const Play = require('../../plays/model/Play');
 
-const User = sequelize.define('Users', {
+const User = sequelize.define('User', {
 
   id: {
     type: DataTypes.INTEGER,
@@ -46,7 +46,11 @@ const User = sequelize.define('Users', {
     values: ['admin', 'user'],
     allowNull: false,
   },
-});
+
+}, {timestamps: false,
+  freezeTableName: true},
+
+);
 
 User.hasMany(Match, {
   onDelete: 'cascade',
