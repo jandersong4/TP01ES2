@@ -1,265 +1,216 @@
-const ProductService = require('../service/matchs');
-const Product = require('../model/matchs');
-// const PermissionError = require('../../errors/PermissionError');
-// const QueryError = require('../../errors/QueryError');
+const MatchService = require('../service/matchService');
+const Match = require('../model/matchs');
 
 jest.mock('../model/matchs');
 
-describe('ProductService', () => {
-  let productService;
+describe('MatchService', () => {
+  let matchService;
 
   beforeEach(() => {
-    productService = ProductService;
+    matchService = MatchService;
   });
 
-  describe('getAllProducts', () => {
-    it('should return all products', async () => {
-      const products = [
-        {
-          id: 1,
-          name: 'Product 1',
-          image: 'image_url_1',
-          UserId: 1,
-        },
-        {
-          id: 2,
-          name: 'Product 2',
-          image: 'image_url_2',
-          UserId: 2,
-        },
-      ];
-
-      Product.findAll.mockResolvedValue(products);
-
-      const result = await productService.getAllProducts();
-
-      expect(result).toEqual(products);
-    });
-  });
-
-  describe('get10', () => {
-    it('should return 10 products', async () => {
-      const products = [
-        {
-          id: 1,
-          name: 'Product 1',
-          image: 'image_url_1',
-          UserId: 1,
-        },
-        {
-          id: 2,
-          name: 'Product 2',
-          image: 'image_url_2',
-          UserId: 2,
-        },
-        {
-          id: 3,
-          name: 'Product 3',
-          image: 'image_url_3',
-          UserId: 3,
-        },
-        {
-          id: 33,
-          name: 'Product 33',
-          image: 'image_url_33',
-          UserId: 33,
-        },
-        {
-          id: 4,
-          name: 'Product 4',
-          image: 'image_url_4',
-          UserId: 4,
-        },
-        {
-          id: 5,
-          name: 'Product 5',
-          image: 'image_url_5',
-          UserId: 5,
-        },
-        {
-          id: 6,
-          name: 'Product 6',
-          image: 'image_url_6',
-          UserId: 6,
-        },
-        {
-          id: 7,
-          name: 'Product 7',
-          image: 'image_url_7',
-          UserId: 7,
-        },
-        {
-          id: 8,
-          name: 'Product 8',
-          image: 'image_url_8',
-          UserId: 8,
-        },
-        {
-          id: 9,
-          name: 'Product 9',
-          image: 'image_url_9',
-          UserId: 9,
-        },
-        // ... Add more products up to 10
-      ];
-
-      Product.findAll.mockResolvedValue(products);
-
-      const result = await productService.get10();
-
-      expect(result).toEqual(products);
-      expect(result.length).toBe(10);
-    });
-  });
-
-  describe('createProduct', () => {
-    it('should create a new product', async () => {
-      const productData = {
-        id: '1',
-        name: 'New Product',
-        image: 'image_url_new',
-        UserId: 1,
-      };
-
-      // Mock a resposta do create
-      Product.create.mockResolvedValue();
-
-      // Chama a função que você está testando
-      await productService.createProduct(productData);
-
-      // Verifica se a função create foi chamada com os dados corretos
-      expect(Product.create).toHaveBeenCalledWith(productData);
-
-      // Verifica se o produto foi persistido no banco de dados
-      const createdProduct = await Product.findOne({where: {id: productData.id}});
-      expect(createdProduct === productData ); // Verifica se o produto existe (não é nulo ou indefinido)
-    });
-  });
-
-  describe('getProductById', () => {
-    it('should return a product with the specified ID', async () => {
-      const productId = 1;
-      const product = {
-        id: productId,
-        name: 'Product 1',
-        image: 'image_url_1',
-        UserId: 1,
-      };
-
-      Product.findOne.mockResolvedValue(product);
-
-      const result = await productService.getProductById(productId);
-
-      expect(result).toEqual(product);
-    });
-
-    // it('should throw a QueryError if the product with the specified ID is not found', async () => {
-    //   const productId = 1;
-
-    //   Product.findOne.mockResolvedValue(null);
-
-    //   await expect(productService.getProductById(productId)).rejects.toThrow(QueryError);
-    // });
-  });
-
-  describe('updateProductInfo', () => {
-    it('should allow product owner to update product info', async () => {
-      const product = {
+  test('should return all matchs', async () => {
+    const matchs = [
+      {
         id: 1,
-        name: 'Product 1',
+        name: 'Match 1',
         image: 'image_url_1',
         UserId: 1,
-        update: jest.fn().mockResolvedValue(),
+      },
+      {
+        id: 2,
+        name: 'Match 2',
+        image: 'image_url_2',
+        UserId: 2,
+      },
+    ];
 
-      };
-      const body = {
-        name: 'Updated Product',
-        image: 'updated_image_url',
-      };
+    Match.findAll.mockResolvedValue(matchs);
 
-      Product.findByPk.mockResolvedValue(product);
+    const result = await matchService.getAllMatchs();
 
-      await productService.updateProductInfo(1, 1, 'user', body );
-
-      expect(product.update).toHaveBeenCalledWith(body);
-    });
-
-    it('should allow admin to update product info', async () => {
-      const product = {
-        id: 1,
-        name: 'Product 1',
-        image: 'image_url_1',
-        UserId: 1,
-        update: jest.fn().mockResolvedValue(),
-
-      };
-
-      Product.findByPk.mockResolvedValue(product);
-
-      await productService.updateProductInfo(1, 2, 'admin', {name: 'Updated Product'});
-
-      expect(product.update).toHaveBeenCalledWith({name: 'Updated Product'});
-    });
-
-    // it('should throw PermissionError if non-owner and non-admin tries to update product info', async () => {
-    //   const product = {
-    //     id: 1,
-    //     name: 'Product 1',
-    //     image: 'image_url_1',
-    //     UserId: 1,
-    //   };
-
-    //   Product.findByPk.mockResolvedValue(product);
-
-    //   await expect(productService.updateProductInfo(1, 2, 'user', {name: 'Updated Product'})).rejects.toThrow(PermissionError);
-    // });
+    expect(result).toEqual(matchs);
   });
 
-  describe('deleteProduct', () => {
-    it('should allow product owner to delete product', async () => {
-      const product = {
+  test('should return 10 matchs', async () => {
+    const matchs = [
+      {
         id: 1,
-        name: 'Product 1',
+        name: 'Match 1',
         image: 'image_url_1',
         UserId: 1,
-        destroy: jest.fn().mockResolvedValue(),
-      };
+      },
+      {
+        id: 2,
+        name: 'Match 2',
+        image: 'image_url_2',
+        UserId: 2,
+      },
+      {
+        id: 3,
+        name: 'Match 3',
+        image: 'image_url_3',
+        UserId: 3,
+      },
+      {
+        id: 33,
+        name: 'Match 33',
+        image: 'image_url_33',
+        UserId: 33,
+      },
+      {
+        id: 4,
+        name: 'Match 4',
+        image: 'image_url_4',
+        UserId: 4,
+      },
+      {
+        id: 5,
+        name: 'Match 5',
+        image: 'image_url_5',
+        UserId: 5,
+      },
+      {
+        id: 6,
+        name: 'Match 6',
+        image: 'image_url_6',
+        UserId: 6,
+      },
+      {
+        id: 7,
+        name: 'Match 7',
+        image: 'image_url_7',
+        UserId: 7,
+      },
+      {
+        id: 8,
+        name: 'Match 8',
+        image: 'image_url_8',
+        UserId: 8,
+      },
+      {
+        id: 9,
+        name: 'Match 9',
+        image: 'image_url_9',
+        UserId: 9,
+      },
+    ];
 
-      Product.findByPk.mockResolvedValue(product);
+    Match.findAll.mockResolvedValue(matchs);
 
-      await productService.deleteProduct(1, 1, 'user');
+    const result = await matchService.get10();
 
-      expect(product.destroy).toHaveBeenCalled();
-    });
+    expect(result).toEqual(matchs);
+    expect(result.length).toBe(10);
+  });
 
-    it('should allow admin to delete product', async () => {
-      const product = {
-        id: 1,
-        name: 'Product 1',
-        image: 'image_url_1',
-        UserId: 1,
-        destroy: jest.fn().mockResolvedValue(),
-      };
+  test('should create a new match', async () => {
+    const matchData = {
+      id: '1',
+      name: 'New Match',
+      image: 'image_url_new',
+      UserId: 1,
+    };
 
-      Product.findByPk.mockResolvedValue(product);
+    // Mock a resposta do create
+    Match.create.mockResolvedValue();
 
-      await productService.deleteProduct(1, 2, 'admin');
+    // Chama a função que você está testando
+    await matchService.createMatch(matchData);
 
-      expect(product.destroy).toHaveBeenCalled();
-    });
+    // Verifica se a função create foi chamada com os dados corretos
+    expect(Match.create).toHaveBeenCalledWith(matchData);
 
-    // it('should throw PermissionError if non-owner and non-admin tries to delete product', async () => {
-    //   const product = {
-    //     id: 1,
-    //     name: 'Product 1',
-    //     image: 'image_url_1',
-    //     UserId: 1,
-    //     destroy: jest.fn().mockResolvedValue(),
-    //   };
+    // Verifica se o produto foi persistido no banco de dados
+    const createdMatch = await Match.findOne({where: {id: matchData.id}});
+    expect(createdMatch === matchData ); // Verifica se o produto existe (não é nulo ou indefinido)
+  });
 
-    //   Product.findByPk.mockResolvedValue(product);
+  test('should return a match with the specified ID', async () => {
+    const matchId = 1;
+    const match = {
+      id: matchId,
+      name: 'Match 1',
+      image: 'image_url_1',
+      UserId: 1,
+    };
 
-    //   await expect(productService.deleteProduct(1, 2, 'user')).rejects.toThrow(PermissionError);
-    // });
+    Match.findOne.mockResolvedValue(match);
+
+    const result = await matchService.getMatchById(matchId);
+
+    expect(result).toEqual(match);
+  });
+
+  test('should allow match owner to update match info', async () => {
+    const match = {
+      id: 1,
+      name: 'Match 1',
+      image: 'image_url_1',
+      UserId: 1,
+      update: jest.fn().mockResolvedValue(),
+
+    };
+    const body = {
+      name: 'Updated Match',
+      image: 'updated_image_url',
+    };
+
+    Match.findByPk.mockResolvedValue(match);
+
+    await matchService.updateMatchInfo(1, 1, 'user', body );
+
+    expect(match.update).toHaveBeenCalledWith(body);
+  });
+
+  test('should allow admin to update match info', async () => {
+    const match = {
+      id: 1,
+      name: 'Match 1',
+      image: 'image_url_1',
+      UserId: 1,
+      update: jest.fn().mockResolvedValue(),
+
+    };
+
+    Match.findByPk.mockResolvedValue(match);
+
+    await matchService.updateMatchInfo(1, 2, 'admin', {name: 'Updated Match'});
+
+    expect(match.update).toHaveBeenCalledWith({name: 'Updated Match'});
+  });
+
+
+  test('should allow match owner to delete match', async () => {
+    const match = {
+      id: 1,
+      name: 'Match 1',
+      image: 'image_url_1',
+      UserId: 1,
+      destroy: jest.fn().mockResolvedValue(),
+    };
+
+    Match.findByPk.mockResolvedValue(match);
+
+    await matchService.deleteMatch(1, 1, 'user');
+
+    expect(match.destroy).toHaveBeenCalled();
+  });
+
+  test('should allow admin to delete match', async () => {
+    const match = {
+      id: 1,
+      name: 'Match 1',
+      image: 'image_url_1',
+      UserId: 1,
+      destroy: jest.fn().mockResolvedValue(),
+    };
+
+    Match.findByPk.mockResolvedValue(match);
+
+    await matchService.deleteMatch(1, 2, 'admin');
+
+    expect(match.destroy).toHaveBeenCalled();
   });
 });

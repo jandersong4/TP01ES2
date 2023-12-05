@@ -2,7 +2,7 @@ const sequelize = require('../../../database');
 const {DataTypes} = require('sequelize');
 const Rodada = require('../../rodadas/model/Rodada');
 
-const Product = sequelize.define('Products', {
+const Match = sequelize.define('Matchs', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -27,19 +27,19 @@ const Product = sequelize.define('Products', {
   // mestre_id,
 });
 
-// Product.hasMany(Rodada, {
+// Match.hasMany(Rodada, {
 //   onDelete: 'cascade',
 // });
 
-// Rodada.belongsTo(Product);
+// Rodada.belongsTo(Match);
 
 // Rodada.sync({alter: false, force: false})
 //   .then(() => console.log('A tabela Rodadas foi (re)criada'))
 //   .catch((error) => console.log(error));
 
 
-// Product.sync({alter: false, force: false})
-//   .then(() => console.log('A tabela Products foi (re)criada'))
+// Match.sync({alter: false, force: false})
+//   .then(() => console.log('A tabela Matchs foi (re)criada'))
 //   .catch((error) => console.log(error));
 
-module.exports = Product;
+module.exports = Match;

@@ -26,7 +26,7 @@ function loginMiddleware(req, res, next) {
 
             res.cookie('jwt', token, {
               httpOnly: true,
-              secure: process.env.NODE_ENV === 'production',
+              secure: process.env.NODE_ENV === 'matchion',
             });
 
             res.status(204).end();

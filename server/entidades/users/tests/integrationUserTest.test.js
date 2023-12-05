@@ -1,13 +1,10 @@
-// __tests__/userService.test.js
 const superTest = require('supertest');
 const app = require('../../../config/express-config');
-const UserService = require('../service/UserService');
 const request = superTest.agent(app);
 
 
 describe('User Service Integration Tests', () => {
   let userId = 0;
-  const admToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNzAxNjQ4NDc1LCJleHAiOjE3MDQyNDA0NzV9.ksbKOUMlEeTsuAKGkC0tIo4KW6nJAf8BHAaF6b8xg7o';
 
   test('should login successfully', async () => {
     const response = await request
@@ -18,7 +15,7 @@ describe('User Service Integration Tests', () => {
     expect(response.headers).toHaveProperty('set-cookie');
   });
 
-  test('should create a new user', async () => {
+  test('should verify if the route of create a new user is working', async () => {
     const newUser = {
       full_name: 'John Doe',
       username: 'johndoexxx',
@@ -37,14 +34,14 @@ describe('User Service Integration Tests', () => {
 
 
   // Teste para a função getAllUsers
-  test('should get all users', async () => {
+  test('should verify if the route of get all users is woking', async () => {
     const response = await request
       .get('/users');
 
     expect(response.status).toBe(200);
   });
 
-  test('should edit an existing user', async () => {
+  test('should verify if the route of edit an existing user is working', async () => {
     // Definir os dados para atualização
     const updatedUserData = {
       full_name: 'John Doe Jr',
@@ -61,18 +58,15 @@ describe('User Service Integration Tests', () => {
     expect(response.status).toBe(200);
 
 
-    // // Assegurar que os dados foram atualizados conforme esperado
+    // // Assegurar que os dados foram enviados conforme esperado
     expect(response.body.username).toBe(updatedUserData.username);
     expect(response.body.email).toBe(updatedUserData.email);
     expect(response.body.image).toBe(updatedUserData.image);
   });
 
-  test('deleteUser', async () => {
+  test('should verify if the route of deleteUser is working', async () => {
     const response = await request
       .delete(`/users/user/${userId}`);
     expect(response.statusCode).toBe(204);
   });
-
-
-  // Add more tests for other UserService methods as needed
 });
