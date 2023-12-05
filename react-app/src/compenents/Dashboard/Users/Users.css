@@ -1,0 +1,18 @@
+
+.botaoCadastro2{
+    width: 80%;
+    margin-left: 20%;
+    text-align: center;
+}
+
+.itens2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-left: 20%;
+    margin-top: 20px;
+} 
+
+.hoverable2{
+    text-align: center;
+    margin-left: 10%;
+}

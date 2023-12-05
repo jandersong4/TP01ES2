@@ -1,0 +1,35 @@
+.background {
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+  background: black;
+}
+
+.img-home {
+  width: 150px;
+  height: 150px;
+  margin: 0;
+
+  -webkit-animation: spin 10s linear infinite;
+  -moz-animation: spin 10s linear infinite;
+  animation: spin 10s linear infinite;
+}
+
+.button {
+  background: rgb(211, 20, 20);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  border: radius 25px;
+  width: 150px;
+  height: 50px;
+}

@@ -1,0 +1,29 @@
+.UserProfile {
+    margin-left: 40%;
+    padding-top: 30px;
+    text-align: center;
+    padding-left: 120px;
+    color: black;
+}
+
+.Title{
+    color: black
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.UserProfile Button{
+    margin-right: 10px;
+}
+
+.UserProfile Img{
+    margin: 0%;
+} 
+
+.UserProfile Button{
+    width: 100%;
+}

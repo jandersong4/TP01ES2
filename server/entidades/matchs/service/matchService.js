@@ -33,7 +33,7 @@ class MatchService {
   async updateMatchInfo(id, reqUserId, reqUserRole, body) {
     const match = await Match.findByPk(id);
     if (!match) {
-      throw new QueryError(`Não foi encontrado um produto com ID ${id}`);
+      throw new QueryError(`Não foi encontrado um match com ID ${id}`);
     }
 
     const isAdmin = reqUserRole === 'admin';
@@ -41,7 +41,7 @@ class MatchService {
     // console.log(isAdmin, isMatchOwner);
     if (!isAdmin && !isMatchOwner) {
       throw new PermissionError(
-        'Você não tem permissão para editar esse produto',
+        'Você não tem permissão para editar esse match',
       );
     }
 
@@ -51,7 +51,7 @@ class MatchService {
   async deleteMatch(id, reqUserId, reqUserRole) {
     const match = await Match.findByPk(id);
     if (!match) {
-      throw new QueryError(`Não foi encontrado um produto com ID ${id}`);
+      throw new QueryError(`Não foi encontrado um match com ID ${id}`);
     }
 
     const isAdmin = reqUserRole === 'admin';
@@ -59,7 +59,7 @@ class MatchService {
 
     if (!isAdmin && !isMatchOwner) {
       throw new PermissionError(
-        'Você não tem permissão para deletar esse produto',
+        'Você não tem permissão para deletar esse match',
       );
     }
     // o certo é destroy ou delete????

@@ -1,0 +1,48 @@
+.host {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+}
+
+.wellcome {
+  display: flex;
+  background: rgb(211, 20, 20);
+  height: 100%;
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 52px;
+}
+
+.form {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex: 1;
+}
+
+.left {
+  width: 60%;
+  height: 100%;
+}
+
+.right {
+  color: #dddddd;
+  width: 120%;
+  height: 100%;
+  background-color: #000000;
+} */

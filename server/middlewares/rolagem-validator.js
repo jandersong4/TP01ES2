@@ -35,7 +35,7 @@ function getValidations(method) {
         .withMessage('Você deve enviar um dado para a partida!')
         .notEmpty()
         .withMessage('O dado da partida não pode ficar vazio!'),
-      body('IdDoProduto')
+      body('IdDoMatch')
         .exists()
         .withMessage('Você deve enviar um MatchId para a partida!')
         .notEmpty()

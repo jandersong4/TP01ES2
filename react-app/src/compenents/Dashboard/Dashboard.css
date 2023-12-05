@@ -1,0 +1,71 @@
+.Dashboard {
+  /* height: 100%; */
+  color: white;
+  background-color: black;
+}
+
+.flex-column.nav {
+  position: fixed;
+  /* top: 0%; */
+  /* margin: 0; */
+  /* display: inline-flex; */
+  width: 20%;
+  height: 100%;
+  background-color: rgb(211, 20, 20);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  align-items: center;
+}
+
+.button_dashboard {
+  width: 100%;
+}
+
+.dashboard_name {
+  width: 100%;
+}
+/* .flex-column.nav * {
+  margin-inline: auto;
+} */
+
+/* .Dashboard img {
+  margin-bottom: 60px;
+} */
+
+/* .button_dashboard {
+    margin: 15px;
+    color: rgb(28, 31, 35);
+    } */
+
+/* .Item1 {
+  padding: 15px;
+}
+
+.Item2 {
+  padding: 15px;
+}
+
+.Item3 {
+  padding: 15px;
+} */
+
+/* .rotate {
+  position: flex;
+  width: 5%;
+  margin-top: 50px;
+  margin-left: 60%;
+} */
+
+/* .Match2 {
+  margin-top: 20px;
+  margin-left: 20px;
+} */
+
+/* .itens2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-left: 20%;
+  margin-top: 20px;
+} */

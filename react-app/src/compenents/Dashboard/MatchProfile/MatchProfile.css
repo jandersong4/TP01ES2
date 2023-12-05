@@ -1,0 +1,50 @@
+
+.MatchProfile {
+    margin-left: 40%;
+    padding-top: 30px;
+    text-align: center;
+    padding-left: 120px;
+    color: black;
+}
+
+.Title{
+    padding: 15px;
+}
+
+.MatchProfile Button{
+    margin-right: 10px;
+}
+
+
+.MatchProfile Img{
+    margin: 0%;
+} 
+
+
+.MatchProfile h1 {
+    color: white;
+}
+
+.Tabela{
+    /* display:inline-flex; */
+    margin-right: 48%;
+    background-color: white;
+    margin-top: 50px;
+    margin-left: -10%;
+
+}
+
+
+.Button1{
+   width: 100%;
+}
+
+.Button2{
+    margin-top: 50px;
+    margin-right: 60%;
+}
+
+.mestre{
+font-size:x-large;
+margin-bottom: 30ox;
+}

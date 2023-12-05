@@ -1,0 +1,30 @@
+    .UserCard img{
+        border-radius: 4px;
+        box-shadow: 0px 1px 2px rgb(0, 0, 0, 0.2);
+        height: 128px;
+        width: 128px;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    .name{
+        font-size: 1.3rem;
+        color: white;
+    }
+
+    .UserCard p {
+
+        color: white;
+        font-size: 1.3rem;
+    }
+
+/* .Card{
+    margin-left: 50%;
+    margin-top:40px;
+    padding-bottom: 0px;
+}
+
+.Card.Img{
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+} */

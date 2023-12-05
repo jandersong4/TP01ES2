@@ -39,7 +39,7 @@ const Rodada = sequelize.define('Rodadas', {
     allowNull: false,
   },
 
-  IdDoProduto: {
+  IdDoMatch: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
